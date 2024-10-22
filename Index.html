@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Vincula el archivo CSS -->
+    <title>Esquema de Vacunación</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            border: 5px solid #32CD32;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: white;
+            max-width: 100%;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .center-image {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+        }
+
+        .banner {
+            cursor: pointer;
+            margin: 10px;
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.2s;
+        }
+
+        .banner:hover {
+            transform: scale(1.05);
+        }
+
+        .custom-popover {
+            position: fixed !important;
+            top: 50px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            max-width: 90vw !important;
+            width: auto;
+            z-index: 800;
+        }
+
+        .custom-popover .popover-body {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .custom-popover .popover-body img {
+            width: auto;
+            max-width: min(700px, 90vw);
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Media queries para diferentes tamaños de pantalla */
+        @media (max-width: 768px) {
+            .custom-popover .popover-body img {
+                max-width: 95vw;
+                max-height: 70vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .custom-popover .popover-body img {
+                max-width: 98vw;
+                max-height: 60vh;
+            }
+        }
+    </style>
+</head>
+
+<body class="p-3 m-0 border-0 bd-example">
+    <div class="container">
+        <img src="https://ciudadbienestar.github.io/Curso_PAI/Logos_Acciones_Colectivas-removebg-preview%20(1)%20(1).png"
+            alt="Logo" class="logo">
+        <h1>Esquema de Vacunación</h1>
+        <img src="https://ciudadbienestar.github.io/Curso_PAI/vaquita_Recortada.png" alt="Imagen Centrante"
+            class="center-image">
+
+        <div class="banner-container">
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/Recien_Nacido1.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_RN.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/2_Meses.png" class="banner" data-bs-toggle="popover"
+                data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_2Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/3_4_Meses.png" class="banner" data-bs-toggle="popover"
+                data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacuna-4Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/4_6_Meses.png" class="banner" data-bs-toggle="popover"
+                data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_6Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/5_7_Meses.png" class="banner" data-bs-toggle="popover"
+                data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_7Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/6_12_Meses.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_12Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/7_18_Meses.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_18Mes.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/5_8_A%C3%B1os.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_5A.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/9_17_A%C3%B1os.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_9_17_H.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/9_17_A%C3%B1os_M.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_9_17_M.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/60_A%C3%B1os.png" class="banner"
+                data-bs-toggle="popover" data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacuna_60.png'></div>"
+                data-bs-html="true">
+
+            <img src="https://ciudadbienestar.github.io/Curso_PAI/Gestantes.png" class="banner" data-bs-toggle="popover"
+                data-bs-title="Vacunas"
+                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_Gestantes.png'></div>"
+                data-bs-html="true">
+        </div>
+        <footer class="text-center mt-4 py-3" style="background-color: #f1f1f1;">
+            <div class="container">
+                <p class="mb-0" style="font-size: 0.6rem;"><strong>© 2024 Estrategia de Movilización Social Ciudad Bienestar.</strong</p>
+            </div>
+        </footer>        
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+            const popoverList = [...popoverTriggerList].map(triggerEl => new bootstrap.Popover(triggerEl, {
+                trigger: 'click',
+                placement: 'top',
+                template: `
+                    <div class="popover custom-popover" role="tooltip">
+                        <button type="button" class="close-btn" onclick="closeCurrentPopover()">&times;</button>
+                        <div class="popover-arrow"></div>
+                        <h3 class="popover-header"></h3>
+                        <div class="popover-body"></div>
+                    </div>`,
+                container: 'body'
+            }));
+
+            let currentOpenPopover = null;
+
+            window.closeCurrentPopover = function () {
+                if (currentOpenPopover) {
+                    const popover = bootstrap.Popover.getInstance(currentOpenPopover);
+                    if (popover) {
+                        popover.hide();
+                        currentOpenPopover = null;
+                    }
+                }
+            };
+
+            popoverTriggerList.forEach((triggerEl) => {
+                triggerEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+
+                    if (currentOpenPopover && currentOpenPopover !== triggerEl) {
+                        const popover = bootstrap.Popover.getInstance(currentOpenPopover);
+                        popover.hide();
+                    }
+
+                    currentOpenPopover = triggerEl;
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (currentOpenPopover && !currentOpenPopover.contains(e.target) &&
+                    !e.target.closest('.popover')) {
+                    closeCurrentPopover();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (currentOpenPopover) {
+                    const popover = bootstrap.Popover.getInstance(currentOpenPopover);
+                    popover.update();
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
