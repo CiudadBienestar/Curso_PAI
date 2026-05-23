@@ -4,256 +4,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Esquema de Vacunación PAI – Estrategia de Movilización Social Ciudad Bienestar.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Vincula el archivo CSS -->
-    <title>Esquema de Vacunación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Esquema de Vacunación – PAI</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        :root {
+            --verde: #28a745;
+            --verde-borde: #32CD32;
+            --gris-fondo: #f4f6f4;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Nunito', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
+            padding: 24px 12px;
+            background-color: var(--gris-fondo);
         }
 
         .container {
-            border: 5px solid #32CD32;
-            border-radius: 10px;
-            padding: 20px;
+            border: 4px solid var(--verde-borde);
+            border-radius: 16px;
+            padding: 28px 20px;
             background-color: white;
-            max-width: 100%;
+            max-width: 1180px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(50,205,50,0.12);
+            text-align: center;
         }
 
         .logo {
             width: 100%;
-            max-width: 400px;
+            max-width: 360px;
             height: auto;
-            margin-bottom: 30px;
+            margin: 0 auto 16px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--verde);
+            margin: 12px 0 10px;
         }
 
         .center-image {
             width: 100%;
-            max-width: 250px;
+            max-width: 200px;
             height: auto;
+            margin: 0 auto 24px;
+            display: block;
         }
+
+        /* Buscador */
+        .search-wrapper {
+            margin: 0 auto 24px;
+            max-width: 380px;
+        }
+
+        .search-wrapper input {
+            border: 2px solid var(--verde-borde);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+
+        .search-wrapper input:focus {
+            box-shadow: 0 0 0 3px rgba(50,205,50,0.25);
+        }
+
+        /* Banners */
+        .banner-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .banner-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-item.hidden { display: none; }
 
         .banner {
             cursor: pointer;
-            margin: 10px;
-            width: 200px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 190px;
             height: auto;
-            transition: transform 0.2s;
+            max-height: 140px;
+            object-fit: contain;
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
         }
 
         .banner:hover {
-            transform: scale(1.05);
+            transform: scale(1.06);
+            box-shadow: 0 4px 16px rgba(50,205,50,0.3);
+            border-color: var(--verde-borde);
         }
 
-        .custom-popover {
-            position: fixed !important;
-            top: 50px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            max-width: 90vw !important;
-            width: auto;
-            z-index: 800;
-        }
-
-        .custom-popover .popover-body {
-            padding: 0;
-            display: flex;
+        /* Modal */
+        #vacunaModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.55);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            background-color: white;
         }
 
-        .custom-popover .popover-body img {
-            width: auto;
-            max-width: min(700px, 90vw);
-            height: auto;
-            max-height: 80vh;
-            object-fit: contain;
+        .modal-inner {
+            background: white;
+            border-radius: 14px;
+            max-width: min(720px, 94vw);
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+            position: relative;
         }
 
-        .close-btn {
+        .modal-header-bar {
+            background: var(--verde);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 12px 48px 12px 18px;
+        }
+
+        #modalClose {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.5);
+            top: 8px; right: 12px;
+            background: rgba(255,255,255,0.25);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 28px; height: 28px;
+            font-size: 1.1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 1;
         }
 
-        .close-btn:hover {
-            background: rgba(0, 0, 0, 0.7);
+        #modalClose:hover { background: rgba(255,255,255,0.45); }
+
+        .modal-body {
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Media queries para diferentes tamaños de pantalla */
+        #modalSpinner {
+            width: 36px; height: 36px;
+            border: 4px solid #e0e0e0;
+            border-top-color: var(--verde);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #modalImg {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: none;
+        }
+
+        /* Sin resultados */
+        .no-results {
+            display: none;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        footer { border-radius: 0 0 10px 10px; margin-top: 32px; }
+        footer p { font-size: 0.65rem; color: #555; }
+
         @media (max-width: 768px) {
-            .custom-popover .popover-body img {
-                max-width: 95vw;
-                max-height: 70vh;
+            .container { padding: 22px 14px; }
+            .banner-container {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
             }
+            .banner {
+                max-width: 150px;
+                max-height: 120px;
+            }
+            #modalImg { max-height: 70vh; }
         }
-
         @media (max-width: 480px) {
-            .custom-popover .popover-body img {
-                max-width: 98vw;
-                max-height: 60vh;
+            body { padding: 12px 8px; }
+            .banner-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+            .banner {
+                max-width: 130px;
+                max-height: 105px;
+            }
+            h1 { font-size: 1.4rem; }
+            #modalImg { max-height: 60vh; }
         }
     </style>
 </head>
 
-<body class="p-3 m-0 border-0 bd-example">
+<body>
     <div class="container">
-        <img src="https://ciudadbienestar.github.io/Curso_PAI/Logos_Acciones_Colectivas-removebg-preview%20(1)%20(1).png"
-            alt="Logo" class="logo">
+
+        <!-- Logo centrado -->
+        <img src="Logos_Acciones_Colectivas-removebg-preview%20(1)%20(1).png"
+             alt="Logo Ciudad Bienestar" class="logo">
+
         <h1>Esquema de Vacunación</h1>
-        <img src="https://ciudadbienestar.github.io/Curso_PAI/vaquita_Recortada.png" alt="Imagen Centrante"
-            class="center-image">
 
-        <div class="banner-container">
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/Recien_Nacido1.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_RN.png'></div>"
-                data-bs-html="true">
+        <!-- Vaquita centrada -->
+        <img src="vaquita_Recortada.png" alt="Vaquita PAI" class="center-image">
 
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/2_Meses.png" class="banner" data-bs-toggle="popover"
-                data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_2Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/3_4_Meses.png" class="banner" data-bs-toggle="popover"
-                data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacuna-4Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/4_6_Meses.png" class="banner" data-bs-toggle="popover"
-                data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_6Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/5_7_Meses.png" class="banner" data-bs-toggle="popover"
-                data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_7Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/6_12_Meses.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_12Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/7_18_Meses.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_18Mes.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/5_8_A%C3%B1os.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/Vacunas_5A.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/9_17_A%C3%B1os.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_9_17_H.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/9_17_A%C3%B1os_M.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_9_17_M.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/60_A%C3%B1os.png" class="banner"
-                data-bs-toggle="popover" data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacuna_60.png'></div>"
-                data-bs-html="true">
-
-            <img src="https://ciudadbienestar.github.io/Curso_PAI/Gestantes.png" class="banner" data-bs-toggle="popover"
-                data-bs-title="Vacunas"
-                data-bs-content="<div class='popover-image-container'><img src='https://ciudadbienestar.github.io/Curso_PAI/vacunas_Gestantes.png'></div>"
-                data-bs-html="true">
+        <!-- Buscador -->
+        <div class="search-wrapper">
+            <input type="text" id="buscador"
+                   placeholder="🔍 Buscar grupo (ej: gestantes, recién nacido…)"
+                   aria-label="Buscar grupo de vacunación">
         </div>
-        <footer class="text-center mt-4 py-3" style="background-color: #f1f1f1;">
-            <div class="container">
-                <p class="mb-0" style="font-size: 0.6rem;"><strong>© 2025 Estrategia de Movilización Social Ciudad Bienestar.</strong</p>
+        <p class="no-results" id="sinResultados">No se encontró ningún grupo con ese nombre.</p>
+
+        <!-- Banners — sin etiquetas de texto debajo -->
+        <div class="banner-container" id="bannerContainer">
+
+            <div class="banner-item" data-label="Recién Nacido">
+                <img src="Recien_Nacido1.png" class="banner" alt="Recién Nacido"
+                     data-vacunas="vacunas_RN.png"
+                     data-titulo="Vacunas – Recién Nacido">
             </div>
-        </footer>        
-        
+
+            <div class="banner-item" data-label="1 Mes 15 Días">
+                <img src="1mes_15dias.png" class="banner" alt="1 Mes 15 Días"
+                     data-vacunas="vacunas_1mes_15dias.png"
+                     data-titulo="Vacunas – 1 Mes 15 Días">
+            </div>
+
+            <div class="banner-item" data-label="2 Meses">
+                <img src="2_Meses.png" class="banner" alt="2 Meses"
+                     data-vacunas="vacunas_2Mes.png"
+                     data-titulo="Vacunas – 2 Meses">
+            </div>
+
+            <div class="banner-item" data-label="3 Meses">
+                <img src="3_meses.png" class="banner" alt="3 Meses"
+                     data-vacunas="vacunas_3meses.png"
+                     data-titulo="Vacunas – 3 Meses">
+            </div>
+
+            <div class="banner-item" data-label="3 a 4 Meses">
+                <img src="3_4_Meses.png" class="banner" alt="3 a 4 Meses"
+                     data-vacunas="Vacuna-4Mes.png"
+                     data-titulo="Vacunas – 3 a 4 Meses">
+            </div>
+
+            <div class="banner-item" data-label="4 Meses 15 Días">
+                <img src="4_meses_15dias.png" class="banner" alt="4 Meses 15 Días"
+                     data-vacunas="vacuna_4meses_15dias.png"
+                     data-titulo="Vacunas – 4 Meses 15 Días">
+            </div>
+
+            <div class="banner-item" data-label="4 a 6 Meses">
+                <img src="4_6_Meses.png" class="banner" alt="4 a 6 Meses"
+                     data-vacunas="Vacunas_6Mes.png"
+                     data-titulo="Vacunas – 4 a 6 Meses">
+            </div>
+
+            <div class="banner-item" data-label="5 a 7 Meses">
+                <img src="5_7_Meses.png" class="banner" alt="5 a 7 Meses"
+                     data-vacunas="vacunas_7Mes.png"
+                     data-titulo="Vacunas – 5 a 7 Meses">
+            </div>
+
+            <div class="banner-item" data-label="6 a 12 Meses">
+                <img src="6_12_Meses.png" class="banner" alt="6 a 12 Meses"
+                     data-vacunas="Vacunas_12Mes.png"
+                     data-titulo="Vacunas – 6 a 12 Meses">
+            </div>
+
+            <div class="banner-item" data-label="7 a 18 Meses">
+                <img src="7_18_Meses.png" class="banner" alt="7 a 18 Meses"
+                     data-vacunas="vacunas_18Mes.png"
+                     data-titulo="Vacunas – 7 a 18 Meses">
+            </div>
+
+            <div class="banner-item" data-label="9 Meses">
+                <img src="9_meses.png" class="banner" alt="9 Meses"
+                     data-vacunas="vacuna_9meses.png"
+                     data-titulo="Vacunas – 9 Meses">
+            </div>
+
+            <div class="banner-item" data-label="5 a 8 Años">
+                <img src="5_8_A%C3%B1os.png" class="banner" alt="5 a 8 Años"
+                     data-vacunas="Vacunas_5A.png"
+                     data-titulo="Vacunas – 5 a 8 Años">
+            </div>
+
+            <div class="banner-item" data-label="9 a 17 Años Hombres">
+                <img src="9_17_A%C3%B1os.png" class="banner" alt="9 a 17 Años Hombres"
+                     data-vacunas="vacunas_9_17_H.png"
+                     data-titulo="Vacunas – 9 a 17 Años (Hombres)">
+            </div>
+
+            <div class="banner-item" data-label="9 a 17 Años Mujeres">
+                <img src="9_17_A%C3%B1os_M.png" class="banner" alt="9 a 17 Años Mujeres"
+                     data-vacunas="vacunas_9_17_M.png"
+                     data-titulo="Vacunas – 9 a 17 Años (Mujeres)">
+            </div>
+
+            <div class="banner-item" data-label="60 Años o más">
+                <img src="60_A%C3%B1os.png" class="banner" alt="60 Años o más"
+                     data-vacunas="vacuna_60.png"
+                     data-titulo="Vacunas – 60 Años o más">
+            </div>
+
+            <div class="banner-item" data-label="Gestantes Embarazadas">
+                <img src="Gestantes.png" class="banner" alt="Gestantes"
+                     data-vacunas="vacunas_Gestantes.png"
+                     data-titulo="Vacunas – Gestantes">
+            </div>
+
+            <div class="banner-item" data-label="Mujeres en Edad Fértil">
+                <img src="Mujeres_edad_fertil.png" class="banner" alt="Mujeres en Edad Fértil"
+                     data-vacunas="Vacunas_Mujeres_fertil.png"
+                     data-titulo="Vacunas – Mujeres en Edad Fértil">
+            </div>
+
+        </div>
+
+        <!-- Modal de vacunas -->
+        <div id="vacunaModal">
+            <div class="modal-inner">
+                <div class="modal-header-bar" id="modalHeader"></div>
+                <button id="modalClose" aria-label="Cerrar">×</button>
+                <div class="modal-body">
+                    <div id="modalSpinner"></div>
+                    <img id="modalImg" src="" alt="Vacunas">
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-4 py-3" style="background-color:#f1f1f1;">
+            <div class="container">
+                <p class="mb-0"><strong>© 2025 Estrategia de Movilización Social Ciudad Bienestar.</strong></p>
+            </div>
+        </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-            const popoverList = [...popoverTriggerList].map(triggerEl => new bootstrap.Popover(triggerEl, {
-                trigger: 'click',
-                placement: 'top',
-                template: `
-                    <div class="popover custom-popover" role="tooltip">
-                        <button type="button" class="close-btn" onclick="closeCurrentPopover()">&times;</button>
-                        <div class="popover-arrow"></div>
-                        <h3 class="popover-header"></h3>
-                        <div class="popover-body"></div>
-                    </div>`,
-                container: 'body'
-            }));
+        // --- Modal ---
+        const modal      = document.getElementById('vacunaModal');
+        const modalImg   = document.getElementById('modalImg');
+        const modalHdr   = document.getElementById('modalHeader');
+        const modalSpinner = document.getElementById('modalSpinner');
+        const modalClose = document.getElementById('modalClose');
 
-            let currentOpenPopover = null;
+        function openModal(src, titulo) {
+            modalHdr.textContent = titulo;
+            modalImg.style.display = 'none';
+            modalSpinner.style.display = 'block';
+            modal.style.display = 'flex';
 
-            window.closeCurrentPopover = function () {
-                if (currentOpenPopover) {
-                    const popover = bootstrap.Popover.getInstance(currentOpenPopover);
-                    if (popover) {
-                        popover.hide();
-                        currentOpenPopover = null;
-                    }
-                }
+            const tmp = new Image();
+            tmp.onload = () => {
+                modalImg.src = src;
+                modalImg.style.display = 'block';
+                modalSpinner.style.display = 'none';
             };
+            tmp.onerror = () => {
+                modalSpinner.style.display = 'none';
+                modalImg.alt = 'No se pudo cargar la imagen.';
+                modalImg.style.display = 'block';
+            };
+            tmp.src = src;
+        }
 
-            popoverTriggerList.forEach((triggerEl) => {
-                triggerEl.addEventListener('click', (e) => {
-                    e.stopPropagation();
+        function closeModal() {
+            modal.style.display = 'none';
+            modalImg.src = '';
+        }
 
-                    if (currentOpenPopover && currentOpenPopover !== triggerEl) {
-                        const popover = bootstrap.Popover.getInstance(currentOpenPopover);
-                        popover.hide();
-                    }
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-                    currentOpenPopover = triggerEl;
-                });
+        document.querySelectorAll('.banner').forEach(img => {
+            img.addEventListener('click', () => openModal(img.dataset.vacunas, img.dataset.titulo));
+        });
+
+        // --- Buscador con soporte de tildes ---
+        const buscador     = document.getElementById('buscador');
+        const items        = document.querySelectorAll('.banner-item');
+        const sinResultados = document.getElementById('sinResultados');
+
+        function norm(str) {
+            return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        buscador.addEventListener('input', () => {
+            const q = norm(buscador.value);
+            let n = 0;
+            items.forEach(item => {
+                const match = norm(item.dataset.label).includes(q);
+                item.classList.toggle('hidden', !match);
+                if (match) n++;
             });
-
-            document.addEventListener('click', (e) => {
-                if (currentOpenPopover && !currentOpenPopover.contains(e.target) &&
-                    !e.target.closest('.popover')) {
-                    closeCurrentPopover();
-                }
-            });
-
-            window.addEventListener('resize', () => {
-                if (currentOpenPopover) {
-                    const popover = bootstrap.Popover.getInstance(currentOpenPopover);
-                    popover.update();
-                }
-            });
+            sinResultados.style.display = n === 0 ? 'block' : 'none';
         });
     </script>
-
-
 </body>
-
 </html>
