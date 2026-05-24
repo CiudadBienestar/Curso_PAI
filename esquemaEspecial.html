@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Infografías PAI – COVID-19, Influenza y Población Susceptible">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Infografías PAI</title>
+    <style>
+        :root {
+            --verde: #28a745;
+            --verde-borde: #32CD32;
+            --gris-fondo: #f4f6f4;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--gris-fondo);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 28px 16px;
+        }
+
+        .container {
+            background: white;
+            border: 4px solid var(--verde-borde);
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 980px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(50,205,50,0.12);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--verde);
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+
+        /* Tarjetas */
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border: 3px solid var(--verde-borde);
+            border-radius: 14px;
+            overflow: hidden;
+            width: 280px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 28px rgba(50,205,50,0.3);
+            border-color: var(--verde);
+        }
+
+        .card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-label {
+            background: var(--verde);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        /* Modal */
+        #modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .modal-inner {
+            background: white;
+            border-radius: 14px;
+            max-width: min(900px, 96vw);
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .modal-header-bar {
+            background: var(--verde);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 13px 48px 13px 20px;
+        }
+
+        #modalClose {
+            position: absolute;
+            top: 9px; right: 14px;
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        #modalClose:hover { background: rgba(255,255,255,0.45); }
+
+        /* Zona de zoom */
+        .zoom-wrapper {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+            background: #fafafa;
+            cursor: zoom-in;
+        }
+
+        .zoom-wrapper.zoomed {
+            cursor: zoom-out;
+        }
+
+        #modalImg {
+            width: 100%;
+            max-height: 82vh;
+            object-fit: contain;
+            display: none;
+            transform-origin: center center;
+            transform: scale(1);
+            transition: transform 0.4s ease;
+        }
+
+        #modalImg.zoomed {
+            transform: scale(1.9);
+        }
+
+        #modalSpinner {
+            width: 38px; height: 38px;
+            border: 4px solid #e0e0e0;
+            border-top-color: var(--verde);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 32px auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .zoom-hint {
+            font-size: 0.75rem;
+            color: #999;
+            padding: 6px 0 10px;
+            text-align: center;
+            background: white;
+        }
+
+        footer {
+            margin-top: 36px;
+            font-size: 0.65rem;
+            color: #777;
+            background: #f1f1f1;
+            border-radius: 0 0 10px 10px;
+            padding: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .card { width: 90%; max-width: 320px; }
+            .card img { height: 200px; }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Esquemas Especiales de Vacunación</h1>
+        <p class="subtitulo">Haz clic en una infografía para verla en detalle</p>
+
+        <div class="cards">
+
+            <div class="card" data-src="COVID.png" data-titulo="Esquema COVID-19">
+                <img src="COVID.png" alt="COVID-19">
+                <div class="card-label">COVID-19</div>
+            </div>
+
+            <div class="card" data-src="Influenza.png" data-titulo="Esquema Influenza">
+                <img src="Influenza.png" alt="Influenza">
+                <div class="card-label">Influenza</div>
+            </div>
+
+            <div class="card" data-src="Esquema_Suceptibles.png" data-titulo="Población Susceptible">
+                <img src="Esquema_Suceptibles.png" alt="Población Susceptible">
+                <div class="card-label">Población Susceptible</div>
+            </div>
+
+        </div>
+
+        <!-- Modal -->
+        <div id="modal">
+            <div class="modal-inner">
+                <div class="modal-header-bar" id="modalHeader"></div>
+                <button id="modalClose" aria-label="Cerrar">×</button>
+                <div class="zoom-wrapper" id="zoomWrapper">
+                    <div id="modalSpinner"></div>
+                    <img id="modalImg" alt="Infografía">
+                </div>
+                <p class="zoom-hint" id="zoomHint" style="display:none;">🔍 Clic para hacer zoom · Arrastra para moverte · Clic de nuevo para alejar</p>
+            </div>
+        </div>
+
+        <footer>© 2026 Estrategia de Movilización Social Ciudad Bienestar.</footer>
+    </div>
+
+    <script>
+        const modal        = document.getElementById('modal');
+        const modalImg     = document.getElementById('modalImg');
+        const modalHeader  = document.getElementById('modalHeader');
+        const modalSpinner = document.getElementById('modalSpinner');
+        const modalClose   = document.getElementById('modalClose');
+        const zoomWrapper  = document.getElementById('zoomWrapper');
+        const zoomHint     = document.getElementById('zoomHint');
+
+        function openModal(src, titulo) {
+            modalHeader.textContent = titulo;
+            modalImg.style.display = 'none';
+            modalImg.classList.remove('zoomed');
+            modalImg.style.transform = 'scale(1)';
+            zoomWrapper.classList.remove('zoomed');
+            zoomHint.style.display = 'none';
+            isZoomed = false;
+            translateX = 0; translateY = 0;
+            modalSpinner.style.display = 'block';
+            modal.style.display = 'flex';
+
+            const tmp = new Image();
+            tmp.onload = () => {
+                modalImg.src = src;
+                modalImg.style.display = 'block';
+                modalSpinner.style.display = 'none';
+                zoomHint.style.display = 'block';
+            };
+            tmp.onerror = () => { modalSpinner.style.display = 'none'; };
+            tmp.src = src;
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            modalImg.src = '';
+            modalImg.classList.remove('zoomed');
+            modalImg.style.transform = 'scale(1)';
+            zoomWrapper.classList.remove('zoomed');
+            isZoomed = false;
+            translateX = 0; translateY = 0;
+        }
+
+        // --- Zoom + arrastre ---
+        let isZoomed = false;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        function applyTransform(scale) {
+            modalImg.style.transform = `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
+        }
+
+        zoomWrapper.addEventListener('click', e => {
+            if (isDragging) return; // no toggle si fue un arrastre
+            if (e.target !== modalImg || modalImg.style.display === 'none') return;
+
+            isZoomed = !isZoomed;
+            if (isZoomed) {
+                translateX = 0; translateY = 0;
+                modalImg.classList.add('zoomed');
+                zoomWrapper.classList.add('zoomed');
+                applyTransform(1.9);
+            } else {
+                modalImg.classList.remove('zoomed');
+                zoomWrapper.classList.remove('zoomed');
+                translateX = 0; translateY = 0;
+                modalImg.style.transform = 'scale(1)';
+            }
+        });
+
+        // Arrastre con mouse
+        modalImg.addEventListener('mousedown', e => {
+            if (!isZoomed) return;
+            isDragging = false;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            zoomWrapper.style.cursor = 'grabbing';
+
+            function onMove(e) {
+                isDragging = true;
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                applyTransform(1.9);
+            }
+            function onUp() {
+                zoomWrapper.style.cursor = 'zoom-out';
+                setTimeout(() => { isDragging = false; }, 10);
+                window.removeEventListener('mousemove', onMove);
+                window.removeEventListener('mouseup', onUp);
+            }
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+            e.preventDefault();
+        });
+
+        // Arrastre táctil
+        modalImg.addEventListener('touchstart', e => {
+            if (!isZoomed) return;
+            isDragging = false;
+            const t = e.touches[0];
+            startX = t.clientX - translateX;
+            startY = t.clientY - translateY;
+
+            function onMove(e) {
+                isDragging = true;
+                const t = e.touches[0];
+                translateX = t.clientX - startX;
+                translateY = t.clientY - startY;
+                applyTransform(1.9);
+                e.preventDefault();
+            }
+            function onEnd() {
+                setTimeout(() => { isDragging = false; }, 10);
+                window.removeEventListener('touchmove', onMove);
+                window.removeEventListener('touchend', onEnd);
+            }
+            window.addEventListener('touchmove', onMove, { passive: false });
+            window.addEventListener('touchend', onEnd);
+        }, { passive: true });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => openModal(card.dataset.src, card.dataset.titulo));
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+</html>
