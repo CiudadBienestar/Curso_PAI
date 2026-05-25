@@ -86,10 +86,10 @@
 
         /* Banners */
         .banner-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 14px;
-            align-items: stretch;
             width: 100%;
         }
 
@@ -97,6 +97,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 170px;
         }
 
         .banner-item.hidden { display: none; }
@@ -104,19 +105,20 @@
         .banner {
             cursor: pointer;
             width: 100%;
-            max-width: 190px;
-            height: auto;
-            max-height: 140px;
+            height: 80px;
             object-fit: contain;
             border-radius: 10px;
             transition: transform 0.2s, box-shadow 0.2s;
             border: 2px solid transparent;
+            display: block;
         }
 
         .banner:hover {
-            transform: scale(1.06);
-            box-shadow: 0 4px 16px rgba(50,205,50,0.3);
+            transform: scale(1.18);
+            box-shadow: 0 6px 20px rgba(50,205,50,0.35);
             border-color: var(--verde-borde);
+            z-index: 10;
+            position: relative;
         }
 
         /* Modal */
@@ -205,25 +207,14 @@
 
         @media (max-width: 768px) {
             .container { padding: 22px 14px; }
-            .banner-container {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 10px;
-            }
-            .banner {
-                max-width: 150px;
-                max-height: 120px;
-            }
+            .banner-item { width: 145px; }
+            .banner { height: 65px; }
             #modalImg { max-height: 70vh; }
         }
         @media (max-width: 480px) {
             body { padding: 12px 8px; }
-            .banner-container {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-            .banner {
-                max-width: 130px;
-                max-height: 105px;
-            }
+            .banner-item { width: 130px; }
+            .banner { height: 55px; }
             h1 { font-size: 1.4rem; }
             #modalImg { max-height: 60vh; }
         }
@@ -277,22 +268,12 @@
                      data-titulo="Vacunas – 3 Meses">
             </div>
 
-            <div class="banner-item" data-label="3 a 4 Meses">
-                <img src="3_4_Meses.png" class="banner" alt="3 a 4 Meses"
-                     data-vacunas="Vacuna-4Mes.png"
-                     data-titulo="Vacunas – 3 a 4 Meses">
-            </div>
+
 
             <div class="banner-item" data-label="4 Meses 15 Días">
                 <img src="4_meses_15dias.png" class="banner" alt="4 Meses 15 Días"
                      data-vacunas="vacuna_4meses_15dias.png"
                      data-titulo="Vacunas – 4 Meses 15 Días">
-            </div>
-
-            <div class="banner-item" data-label="4 a 6 Meses">
-                <img src="4_6_Meses.png" class="banner" alt="4 a 6 Meses"
-                     data-vacunas="Vacunas_6Mes.png"
-                     data-titulo="Vacunas – 4 a 6 Meses">
             </div>
 
             <div class="banner-item" data-label="5 a 7 Meses">
